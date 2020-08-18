@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_boost/flutter_boost.dart';
+import 'package:flutter/services.dart';
 
 class FirstRouteWidget extends StatelessWidget {
+  void presentNativeView() {
+    FlutterBoost.singleton.channel.sendEvent("presentNative", {
+      'presentNative': "zzz",
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -10,18 +17,26 @@ class FirstRouteWidget extends StatelessWidget {
         title: const Text('First Route'),
       ),
       body: Center(
-        child: RaisedButton(
+          child: Column(children: <Widget>[
+        RaisedButton(
           child: const Text('Open second native page'),
           onPressed: () {
-            FlutterBoost.singleton.open('native', urlParams: {
-              "name": "SecondViewController"
-            }).then((Map<dynamic, dynamic> value) {
-              print(
-                  'call me when page is finished. did recieve second route result $value');
-            });
+            this.presentNativeView();
+            // FlutterBoost.singleton.open('native', urlParams: {
+            //   "name": "SecondViewController"
+            // }).then((Map<dynamic, dynamic> value) {
+            //   print(
+            //       'call me when page is finished. did recieve second route result $value');
+            // });
           },
         ),
-      ),
+        RaisedButton(
+          child: const Text('backTo First native page'),
+          onPressed: () {
+            FlutterBoost.singleton.closeCurrent();
+          },
+        ),
+      ])),
     );
   }
 }
