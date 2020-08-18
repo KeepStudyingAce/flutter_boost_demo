@@ -47,5 +47,4 @@ app.*.symbols
 # Obfuscation related
 app.*.map.json
 
-FlutterBoostDemo/
-flutter_module/
+FlutterBoostDemo/Pods
